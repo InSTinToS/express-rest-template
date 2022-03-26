@@ -1,11 +1,9 @@
-import express from 'express'
+import 'reflect-metadata'
+import 'dotenv/config'
 
-const app = express()
-const port = 3333
+import { app } from './shared/routes'
 
-app.get('/', (req, res) => {
-  res.send('Hello Nodejs')
-})
+const port = process.env.BACKEND_PORT
 
 app.listen(port, () => {
   console.log(`Running at ${port}`)

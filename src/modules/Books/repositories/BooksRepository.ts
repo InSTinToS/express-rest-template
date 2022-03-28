@@ -1,13 +1,18 @@
 import { BookModel } from '../models/BookModel'
 import { IBooksRepository } from './IBooksRepository.types'
 
-import { database } from '@config/connectToPostgres'
+import { connectToDB } from '@config/connectToDB'
 
 class BooksRepository implements IBooksRepository {
   create: IBooksRepository['create'] = async data => {
-    await database.connect()
+    const database = await connectToDB()
 
-    const query = `INSERT INTO books (name, author) VALUES (${data.name}, ${data.author})`
+    const query = `
+    INSERT INTO books 
+      (id, created_at, name, author) 
+    VALUES
+      ('${data.id}', '${data.created_at}', '${data.name}', '${data.author}')
+    `
 
     const createdBook = (await database.query<BookModel>(query)).rows[0]
 
@@ -15,7 +20,7 @@ class BooksRepository implements IBooksRepository {
   }
 
   findAll: IBooksRepository['findAll'] = async () => {
-    await database.connect()
+    const database = await connectToDB()
 
     const query = 'SELECT * FROM books'
 

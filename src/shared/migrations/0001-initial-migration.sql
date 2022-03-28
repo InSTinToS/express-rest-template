@@ -1,6 +1,6 @@
 CREATE TABLE books (
-  id VARCHAR,
-  name VARCHAR,
   author VARCHAR,
-  created_at TIMESTAMP
+  id VARCHAR NOT NULL,
+  name VARCHAR NOT NULL,
+  created_at TIMESTAMP NOT NULL
 )

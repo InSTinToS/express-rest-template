@@ -1,6 +1,6 @@
 import { BookModel } from '../models/BookModel'
 
-type TCreate = (data: Omit<BookModel, 'id' | 'createdAt'>) => Promise<BookModel>
+type TCreate = (data: BookModel) => Promise<BookModel>
 
 type TFindAll = () => Promise<BookModel[] | any[]>
 

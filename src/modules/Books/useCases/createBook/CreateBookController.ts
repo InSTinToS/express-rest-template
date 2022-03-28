@@ -1,11 +1,17 @@
 import { THandle } from './CreateBook.types'
 import { CreateBookService } from './CreateBookService'
 
+import { container } from 'tsyringe'
+
 class CreateBookController {
-  handle: THandle = async (req, res, next) => {
-    const createBookService = new CreateBookService()
+  handle: THandle = async (req, res) => {
+    const createBookService = container.resolve(CreateBookService)
+
     const dataToCreate = req.body
-    createBookService.execute(dataToCreate)
+
+    const createdBook = await createBookService.execute(dataToCreate)
+
+    return res.status(201).json(createdBook)
   }
 }
 

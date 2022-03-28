@@ -1,12 +1,18 @@
 import { TExecute } from './ReadBooks.types'
 
-import { BooksRepository } from '@modules/Books/repositories/BooksRepository'
+import { IBooksRepository } from '@modules/Books/repositories/IBooksRepository.types'
 
+import { inject, injectable } from 'tsyringe'
+
+@injectable()
 class ReadBooksService {
-  execute: TExecute = async () => {
-    const booksRepository = new BooksRepository()
+  constructor(
+    @inject('BooksRepository')
+    private booksRepository: IBooksRepository
+  ) {}
 
-    const books = await booksRepository.findAll()
+  execute: TExecute = async () => {
+    const books = await this.booksRepository.findAll()
 
     return books
   }
